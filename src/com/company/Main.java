@@ -4,69 +4,55 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.company.MainMenu.DisplayMainMenu;
+import static com.company.Profile.ReadProfileFileAndStoreToArrayList;
+
 public class Main {
     public static void main(String[] args) throws IOException {
-        // TODO Auto-generated method stub
 
-        //Startup
+        Scanner scanner = new Scanner(System.in);
+        BufferedReader reader = new BufferedReader(new FileReader("C:\\Profiles.txt"));
+        ArrayList<String> roster = new ArrayList<String>();
+
+        ReadProfileFileAndStoreToArrayList(roster);
+
+        int menuinput = 0;
+
         CreateProfileFile();
         DisplayMainMenu();
-        ArrayList<String> roster = new ArrayList<String>();
-        RecordEverything(roster);
+        ReadProfileFileAndStoreToArrayList(roster);
+
         System.out.println(roster);
-        int menuinput = 0;
         while (menuinput == 0) {
             menuinput = MainMenuCheck(menuinput);
-
-
             while (menuinput > 0 && menuinput < 5) {
-
-
-
-
-
-
-                //This part of the code is where you play the actual random number guessing game.
                 if (menuinput == 1) {
-
-
-
-
-                    //This part of the code prints out the entire list of names and stores them into an array list.
                     BufferedReader reader = new BufferedReader(new FileReader("C:\\Profiles.txt"));
                     String line = reader.readLine();
                     ArrayList<String> names = new ArrayList<>();
 
-                    System.out.println("All of the player's names will be printed.");
-                    while (line != null) {
-                        int counter = 0;
-                        while (counter != 5) {
-                            if (counter == 0) {
-                                System.out.println(line);
-                                names.add(line);
-                            }
-                            line = reader.readLine();
-                            counter++;
-                            //Exits out of the loop when the reader reaches the end of the file.
-                            if (line == null) {
-                                break;
-                            }
-                        }
-                    }
+//                    System.out.println("All of the player's names will be printed.");
+//                    while (line != null) {
+//                        int counter = 0;
+//                        while (counter != 5) {
+//                            if (counter == 0) {
+//                                System.out.println(line);
+//                                names.add(line);
+//                            }
+//                            line = reader.readLine();
+//                            counter++;
+//                            if (line == null) {
+//                                break;
+//                            }
+//                        }
+//                    }
                     reader.close();
 
-
-
-
-
-                    //This part of the code allows you to choose the people who you want to play.
                     Scanner keyboard = new Scanner(System.in);
                     boolean on = true;
                     int exiting = 0;
                     ArrayList<String> playerlist = new ArrayList<String>();
                     playerlist.removeAll(playerlist);
-
-
 
                     while (on == true) {
                         System.out.println("Please enter the names of the players who you want to include one line at a time. You will have to type their names exactly as they are listed (case sensitive).");
@@ -454,7 +440,7 @@ public class Main {
                 if (menuinput == 2) {
                     //This option creates a new profile.
                     CreateAUser();
-                    RecordEverything(roster);
+                    ReadProfileFileAndStoreToArrayList(roster);
                     menuinput = 0;
                     DisplayMainMenu();
                 }
@@ -472,19 +458,6 @@ public class Main {
             }
         }
     }
-
-
-
-    //This method displays the main menu.
-    static void DisplayMainMenu() {
-        System.out.println("Welcome to the Random Number Game Tournament Program!");
-        System.out.println("Option 1: Start a new game.");
-        System.out.println("Option 2: Create a new user.");
-        System.out.println("Option 3: Display high scores.");
-        System.out.println("Option 4: Quit.");
-        System.out.println("Please enter the integer according to the option (1-4).");
-    }
-
 
     //This method checks if the input is an integer that is greater than 0.
     static int PositiveIntegerCheck(int a) {
@@ -759,28 +732,6 @@ public class Main {
             }
         }
         reader.close();
-    }
-
-    //This puts everything from the Profiles.txt into the array list named roster.
-    static void RecordEverything(ArrayList<String> entirething) throws IOException {
-        entirething.clear();
-        BufferedReader in = null;
-
-        try {
-            in = new BufferedReader(new FileReader("C:\\Profiles.txt"));
-            String str;
-            while ((str = in.readLine()) != null) {
-                entirething.add(str);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-        }
     }
 
     //This method asks the user to input a 1 for yes, or a 2 for no.
